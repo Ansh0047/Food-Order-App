@@ -5,10 +5,10 @@ export default function Header() {
     <header id="main-header">
       <div id="title">
         <img src={logoImg} alt="Food image"/>
-        <h1 >Lets order some delicacy</h1>
+        <h1 >Lets order some Cuisine</h1>
       </div>
       <nav>
-        <button>Get menu</button>
+        <button>My Cart</button>
       </nav>
     </header>
   );
