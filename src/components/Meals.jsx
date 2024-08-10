@@ -15,7 +15,7 @@ export default function Meals() {
         }
         const resData = await response.json();
         setAvailableMeals(resData);
-        console.log(resData);
+        // console.log(resData);
       } catch (error) {
         // handle the error
       }
