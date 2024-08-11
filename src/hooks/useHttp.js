@@ -19,25 +19,29 @@ export default function useHttp(url, config, initialData) {
   const [isLoading, setIsLoading] = useState(false);
   const [data, setData] = useState(initialData);
 
+  function clearData(){
+    setData(initialData);
+  }
+
   // here useCallback is used just to memozie this function when there is no change in the state
   // and if changes will make new function
   const sendRequest = useCallback(
-    async function sendRequest() {
+    async function sendRequest(data) {
       setIsLoading(true);
       try {
-        const resData = await sendHttpRequest(url, config);
+        const resData = await sendHttpRequest(url, { ...config, body: data });
         setData(resData);
       } catch (error) {
         setError(error.message || "Something went wrong");
       }
       setIsLoading(false);
     },
-    [url, config ]
+    [url, config]
   );
 
   useEffect(() => {
     // this is special to handle the get request and for other http requsts we will expose the sendRequest function
-    if (config && (config.method === "GET" || !config.method) || !config) {
+    if ((config && (config.method === "GET" || !config.method)) || !config) {
       sendRequest(); // because in get request, fecth don't need any config its by default get request
     }
   }, [sendRequest, config]);
@@ -48,5 +52,6 @@ export default function useHttp(url, config, initialData) {
     isLoading,
     error,
     sendRequest,
+    clearData,
   };
 }

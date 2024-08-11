@@ -1,5 +1,6 @@
 import useHttp from "../hooks/useHttp";
 import MealItem from "./MealItem";
+import Error from "./Error";
 
 const configObject = {};
 
@@ -14,7 +15,11 @@ export default function Meals() {
   // console.log(meals);
 
   if(isLoading){
-    return <p>Fetching meals....</p>
+    return <p className="center">Fetching meals....</p>
+  }
+
+  if(error){
+    return <Error title="Failed to fetch the meals" message={error}/>
   }
 
   return (

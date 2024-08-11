@@ -4,6 +4,7 @@ export const CartContext = createContext({
   items: [],
   addItem: (item) => {},
   removeItem: (id) => {},
+  clearCart: () => {},
 });
 
 // state gives us the previous snapshot and action to perform which type of action
@@ -63,6 +64,10 @@ function cartReducer(state, action) {
       updatedItems[existingCartItemIndex] = updatedItem;
     }
 
+    if (action.type === "CLEAR_CART") {
+      return { ...state, items: [] };
+    }
+
     return { ...state, items: updatedItems };
   }
 
@@ -74,24 +79,31 @@ export default function CartContextProvider({ children }) {
   // {pointer to reducer fucntion , initial state}
   const [cart, dispatchCartAction] = useReducer(cartReducer, { items: [] });
 
-    function addItem(item){
-        dispatchCartAction({
-            type: 'ADD_ITEM',
-            item: item,
-        });
-    }
-
-    function removeItem(id){
+  function addItem(item) {
     dispatchCartAction({
-        type: 'REMOVE_ITEM',
-        id: id,
-    })
-    }
+      type: "ADD_ITEM",
+      item: item,
+    });
+  }
+
+  function removeItem(id) {
+    dispatchCartAction({
+      type: "REMOVE_ITEM",
+      id: id,
+    });
+  }
+
+  function clearCart() {
+    dispatchCartAction({
+      type: "CLEAR_CART",
+    });
+  }
 
   const cartContext = {
     items: cart.items,
-    addItem: addItem,
-    removeItem: removeItem
+    addItem,
+    removeItem,
+    clearCart,
   };
 
   console.log(cartContext);
