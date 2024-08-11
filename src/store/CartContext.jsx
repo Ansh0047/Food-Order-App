@@ -64,11 +64,11 @@ function cartReducer(state, action) {
       updatedItems[existingCartItemIndex] = updatedItem;
     }
 
-    if (action.type === "CLEAR_CART") {
-      return { ...state, items: [] };
-    }
-
     return { ...state, items: updatedItems };
+  }
+
+  if (action.type === "CLEAR_CART") {
+    return { ...state, items: [] };
   }
 
   // else return the unchanged state
