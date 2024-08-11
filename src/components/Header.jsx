@@ -20,7 +20,7 @@ export default function Header() {
     <header id="main-header">
       <div id="title">
         <img src={logoImg} alt="Food image"/>
-        <h1 >Let's order some Cuisine</h1>
+        <h1>NC Grill</h1>
       </div>
       <nav>
         <Button textOnly={true} onClick={handleShowCart}>My Cart ({totalCartItems})</Button>
