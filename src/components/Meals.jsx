@@ -1,31 +1,25 @@
-import { useState, useEffect } from "react";
+import useHttp from "../hooks/useHttp";
 import MealItem from "./MealItem";
 
-export default function Meals() {
-  const [availableMeals, setAvailableMeals] = useState([]);
-  //   to avoid the loop we have used the useEffect
-  useEffect(() => {
-    // to get the data from the backend
-    async function fetchMeals() {
-      try {
-        const response = await fetch("http://localhost:3000/meals");
+const configObject = {};
 
-        if (!response.ok) {
-          throw new Error("Failed to fetch the meals");
-        }
-        const resData = await response.json();
-        setAvailableMeals(resData);
-        // console.log(resData);
-      } catch (error) {
-        // handle the error
-      }
-    }
-    fetchMeals();
-  }, []); // no dependency as there is no state change
+export default function Meals() {
+  // {url, config}   // here it is get request so no config(empty) and initialData
+  const {
+    data: meals,
+    isLoading,
+    error,
+  } = useHttp("http://localhost:3000/meals", configObject, []);
+
+  // console.log(meals);
+
+  if(isLoading){
+    return <p>Fetching meals....</p>
+  }
 
   return (
     <ul id="meals">
-      {availableMeals.map((meal) => (
+      {meals.map((meal) => (
         <MealItem key={meal.id} meal={meal} />
       ))}
     </ul>
