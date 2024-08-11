@@ -16,12 +16,25 @@ export default function CheckOut() {
   function handleClose(){
     userProgressCtx.hideCheckout();
   }
+  
+  // handling form submission and validation
+  function handleSubmit(event){
+    event.preventDefault();
+    console.log('Submit button clicked');
+
+    // form validation logic using built-in feature FormData object
+    const fd = new FormData(event.target);
+    const customerData = Object.formEnteries(fd.entries());   // this will return the object that contains the data {email : abc@xyz.com}
+    
+    // ... now send the data to the backend
+  }
 
   return (
     <Modal className="checkout" open={userProgressCtx.progress === 'checkout'} onClose={handleClose}>
-      <form>
+      <form onSubmit={handleSubmit}>
         <h2>Checkout</h2>
         <p>Total Amount: {currencyFormatter.format(cartTotal)}</p>
+
         <Input label="Full Name" type="text" id="full-name" />
         <Input label="Email Adress" type="email" id="email" />
         <Input label="Street" type="text" id="Street" />
