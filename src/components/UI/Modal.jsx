@@ -8,6 +8,12 @@ export default function Modal({ children, open ,className = ''}) {
     if (open) {
       dialog.current.showModal();
     }
+    // else{
+    //   dialog.current.close();
+    // }
+
+    // use cleanup function to remove the modal 
+    return () => dialog.current.close();
   }, [open]);
 
   return createPortal(
